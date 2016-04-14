@@ -48,7 +48,7 @@ app.use(express.static(path.join(__dirname, '../client')));
 // *** main routes *** //
 app.use('/', routes);
 app.use('/students', studentRoutes);
-app.use('/users', userRoutes);
+app.use('/auth', userRoutes);
 
 
 // catch 404 and forward to error handler

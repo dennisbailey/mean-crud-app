@@ -13,7 +13,7 @@ var UserSchema = new Schema({
   password: {
                type: String,
                required: true
-            }, 
+            },
   admin:     {
                type: Boolean,
                required: true,
@@ -23,32 +23,30 @@ var UserSchema = new Schema({
 
 // Hash the password before saving it to the DB
 UserSchema.pre('save', function(next) {
-  
+
   var user = this;
-  
+
   // check if the password is new or being modified
-  if (!user.isModified('password') {
-    return next();
-  };
-  
+  if (!user.isModified('password')) { return next(); }
+
   // generate a salt
   bcrypt.genSalt(config.SALT_WORK_FACTOR, function(err, salt) {
     if (err) { return next(err); }
-    
+
     // hash that password
     bcrypt.hash(user.password, salt, function(err, hash) {
       if (err) { return next(err); }
-      
+
       // replace the plain text passworkd with the hashed and salted password
       user.password = hash;
-      
+
       // Continue the middleware journey of discovery
       next();
-      
+
     });
-    
-  });  
-    
+
+  });
+
 });
 
 // Password comparison and verification
