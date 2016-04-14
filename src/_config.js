@@ -6,4 +6,6 @@ config.mongoURI = {
   production: process.env.MONGODB_URI
 };
 
+config.SALT_WORK_FACTOR = 10;
+
 module.exports = config;
