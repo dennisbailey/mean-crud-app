@@ -87,4 +87,54 @@ function generateToken(user) {
   return jwt.encode(payload, config.TOKEN_SECRET);
 }
 
+
+// Ensure Authenticated
+function ensureAuthenticated(req, res, next) {
+  if (!(req.headers && req.headers.authorization)) {
+    return res.status(400).json({ status: 'fail',
+                                  message: 'No header present or no authorization header'});
+  }
+  
+  // decode the token
+  var header = req.headers.authorization.split(' ');
+  var token = header[1];
+  var payload = jwt.decode(toke, config.TOKEN_SECRET);
+  var now = moment().unix();
+  
+  // Check the validity of the token
+  if (now > payload.exp) {
+     return res.status(401).json({ status: 'fail',
+                                   message: 'Your token is invalid'});
+  }  
+  
+  // check for the user in the DB
+  User.findById(payload.sub, function(err, user) {
+    if (err) { return next(err); }
+    
+    if (!user) { return res.status(401).json({ status: 'fail',
+                                               message: 'User does not exist'});
+    }
+    
+    // attach user to request object
+    req.user = user;
+    
+    next();
+    
+  })  
+  
+}
+
+
+// Ensure Admin
+function ensureAdmin(req, res, next) {
+  // check for user object
+  // check for admin flag
+  if (!(req.user && req.user.admin)) { return res.status(401).json({ status: 'fail',
+                                                                     message: 'User is not authorized'});  
+  }
+  
+  next();
+}
+
+
 module.exports = router;
