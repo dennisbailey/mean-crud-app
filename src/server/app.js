@@ -13,6 +13,7 @@ var config = require('../_config');
 // *** routes *** //
 var routes = require('./routes/index.js');
 var studentRoutes = require('./routes/students.js');
+var userRoutes = require('./routes/users.js');
 
 
 // *** express instance *** //
@@ -47,6 +48,7 @@ app.use(express.static(path.join(__dirname, '../client')));
 // *** main routes *** //
 app.use('/', routes);
 app.use('/students', studentRoutes);
+app.use('/users', userRoutes);
 
 
 // catch 404 and forward to error handler
