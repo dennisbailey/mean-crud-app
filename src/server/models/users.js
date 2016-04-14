@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var bcrypt = require('bcryptjs');
 var Schema = mongoose.Schema;
 
 var UserSchema = new Schema({
@@ -17,6 +18,11 @@ var UserSchema = new Schema({
                default: false
             }
 });
+
+// Hash the password before saving it to the DB
+
+
+// Password comparison and verification
 
 var User = mongoose.model('user', UserSchema);
 
