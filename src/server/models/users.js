@@ -41,6 +41,8 @@ UserSchema.pre('save', function(next) {
       
       // replace the plain text passworkd with the hashed and salted password
       user.password = hash;
+      
+      // Continue the middleware journey of discovery
       next();
       
     });
