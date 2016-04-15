@@ -1,0 +1,17 @@
+<form class="form" ng-submit="login(user)">
+  <label>Email</label>
+  <input class="form-control"
+         ng-model="user.email" 
+         type="email" 
+         placeholder="enter your email…" 
+         required=""
+        >
+  <label>Password</label>
+  <input class="form-control"
+         ng-model="user.password" 
+         type="password" 
+         placeholder="enter your password…" 
+         required=""
+        >
+  <button type="submit" class="button btn-block btn-success">Log In</button>
+</form>

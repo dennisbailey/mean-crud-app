@@ -22,4 +22,30 @@ app.controller('myController', ['$scope', 'studentDataService', function($scope,
   
   $scope.getAll();
   
-}])
+}]);
+
+
+app.controller('registerController', ['$scope', function($scope){
+  $scope.user = {};
+  
+  $scope.register = function() {
+    console.log($scope.user);
+    
+    $scope.user = {};
+  }
+  
+  
+}]);
+
+
+app.controller('loginController', ['$scope', function($scope){
+  $scope.user = {};
+  
+  $scope.login = function() {
+    console.log($scope.user);
+    
+    $scope.user = {};
+  }
+  
+  
+}]);
