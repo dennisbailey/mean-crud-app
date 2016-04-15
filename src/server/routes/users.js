@@ -3,33 +3,33 @@ var router = express.Router();
 var moment = require('moment');
 var jwt = require('jwt-simple');
 var config = require('../../_config');
-var Users = require('../models/users');
+var User = require('../models/users');
 
 
 // Register
-router.get('/register', function(req, res, next) {
+router.post('/register', function(req, res, next) {
+
    // Check and see if the user already exists
    User.findOne({ email: req.body.email }, function(err, user) {
-     if (err) { return next(err); }
+     
+     if (err) { console.log('here?'); return next(err); }
 
-     if (user) {
-       return res.status(409).json({ status: 'fail',
-                                     message: 'you already signed up'});
+     if (user) { return res.status(409).json({ status: 'fail',
+                                               message: 'you already signed up' });
      }
    });
 
    // Create a new user
    var user = new User(req.body);
+
    user.save(function() {
      var token = generateToken(user);
 
      // create token
-     res.status(200).json({
-       status: 'success',
-       data: { token: token,
-               user: user.email
-             }
-     });
+     res.status(200).json({ status: 'success',
+                            data: { token: token,
+                                    user: user.email
+                                  } });
 
    });
 

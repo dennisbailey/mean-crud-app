@@ -25,7 +25,7 @@ app.controller('myController', ['$scope', 'studentDataService', function($scope,
 }]);
 
 
-app.controller('registerController', ['$scope', '$location', 'authService' function($scope, $location, authService) {
+app.controller('registerController', ['$scope', '$location', 'authService', function($scope, $location, authService) {
   
   $scope.user = {};
   
@@ -45,7 +45,7 @@ app.controller('registerController', ['$scope', '$location', 'authService' funct
 }]);
 
 
-app.controller('loginController', ['$scope', '$location', 'authService' function($scope, $location, authService) {
+app.controller('loginController', ['$scope', '$location', 'authService', function($scope, $location, authService) {
   $scope.user = {};
   
   $scope.login = function() {

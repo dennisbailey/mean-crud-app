@@ -64,13 +64,9 @@ app.service('authService', ['$http', '$window', function($http, $window) {
   
   return {
 
-    register: function(user) {
-                return $http.post('/auth/register', user);
-              },
+    register: function(user) { return $http.post('/auth/register', user); },
            
-    login: function(user) {
-             return $http.post('/auth/login', user);
-           },
+    login: function(user) { return $http.post('/auth/login', user); },
            
     logout: function(user) {
               user = null;
@@ -78,14 +74,40 @@ app.service('authService', ['$http', '$window', function($http, $window) {
             },
     
     setUserInfo: function(userData) {
-                   $window.localStorage.set('user', 'userData.data.user');
-                   $window.localStorage.set('token', 'userData.data.token');
+                   $window.localStorage.setItem('user', userData.data.data.user);
+                   $window.localStorage.setItem('token', userData.data.data.token);
                  },
                  
     getUserInfo: function(userData) {
-                   $window.localStorage.get('user', 'PLACEHOLDER');
+                   $window.localStorage.getItem('user', 'PLACEHOLDER');
                  },              
   
+  };
+
+}]);
+
+
+app.service('authInterceptor', ['$window', '$q', function($window, $q) {
+  
+  return {
+    // always make sure to return anything you use here!
+    request: function(config) {
+               // Check for token in headers
+//                config.headers['X-requested-with'] = XMLHttpRequest;
+               var token = $window.localStorage.getItem('token');
+               if (token) {
+                 config.headers.Authorization = "Bearer " + token;
+//                  return $q.resolve(config);
+               }
+               
+               return config;
+             },
+              
+    responseError: function(config) {
+                     // If header auth is not present throw an error
+                     return config;
+                   }
+
   };
 
 }]);
