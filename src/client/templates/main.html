@@ -1,16 +1,19 @@
 <form class="form" ng-submit="addStudent(student)">
+  <label><h3>First Name</h3></label>
   <input class="form-control"
          ng-model="student.firstName" 
          type="text" 
          placeholder="enter a first name…" 
          required=""
         >
+  <label><h3>Last Name</h3></label>
   <input class="form-control"
          ng-model="student.lastName" 
          type="text" 
          placeholder="enter a last name…" 
          required=""
         >
+  <label><h3>Year</h3></label>
   <input class="form-control"
          ng-model="student.year" 
          type="number" 
