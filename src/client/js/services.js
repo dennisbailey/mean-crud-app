@@ -78,13 +78,12 @@ app.service('authService', ['$http', '$window', function($http, $window) {
             },
     
     setUserInfo: function(userData) {
-                   $window.localStorage.set('user', 'PLACEHOLDER');
-                   $window.localStorage.set('token', 'PLACEHOLDER');
+                   $window.localStorage.set('user', 'userData.data.user');
+                   $window.localStorage.set('token', 'userData.data.token');
                  },
                  
-   getUserInfo: function(userData) {
+    getUserInfo: function(userData) {
                    $window.localStorage.get('user', 'PLACEHOLDER');
-                   $window.localStorage.get('token', 'PLACEHOLDER');
                  },              
   
   };
