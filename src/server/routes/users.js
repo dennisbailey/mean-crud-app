@@ -22,7 +22,7 @@ router.get('/register', function(req, res, next) {
    var user = new User(req.body);
    user.save(function() {
      var token = generateToken(user);
-     
+
      // create token
      res.status(200).json({
        status: 'success',
@@ -47,26 +47,26 @@ router.post('/login', function(req, res, next) {
                                      message: 'email and/or password is incorrect.'});
      }
    });
-  
+
   // Compare the plain text password with the hashed password
   user.comparePassword(req.body.password, function(err, match){
     if (err) { return next(err); }
-    
+
     if(!match) {return res.status(401).json({ status: 'fail',
                                               message: 'email and/or password is incorrect.'});
     }
-    
+
     user = user.toObject();
     // delete user.password;
     var token = generateToken(user);
-    
+
     res.status(200).json({ status: 'success',
                            data: { token: token,
-                                   user: user } 
-    });    
-  
+                                   user: user }
+    });
+
   });
-  
+
 });
 
 
@@ -94,7 +94,7 @@ function ensureAuthenticated(req, res, next) {
     return res.status(400).json({ status: 'fail',
                                   message: 'No header present or no authorization header'});
   }
-  
+
   // decode the token
   var header = req.headers.authorization.split(' ');
   var token = header[1];
@@ -105,23 +105,23 @@ function ensureAuthenticated(req, res, next) {
   if (now > payload.exp) {
      return res.status(401).json({ status: 'fail',
                                    message: 'Your token is invalid'});
-  }  
-  
+  }
+
   // check for the user in the DB
   User.findById(payload.sub, function(err, user) {
     if (err) { return next(err); }
-    
+
     if (!user) { return res.status(401).json({ status: 'fail',
                                                message: 'User does not exist'});
     }
-    
+
     // attach user to request object
     req.user = user;
-    
+
     next();
-    
-  })  
-  
+
+  });
+
 }
 
 
@@ -130,9 +130,9 @@ function ensureAdmin(req, res, next) {
   // check for user object
   // check for admin flag
   if (!(req.user && req.user.admin)) { return res.status(401).json({ status: 'fail',
-                                                                     message: 'User is not authorized'});  
+                                                                     message: 'User is not authorized'});
   }
-  
+
   next();
 }
 

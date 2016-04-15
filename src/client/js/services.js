@@ -11,8 +11,7 @@ app.service('studentDataService', ['crudService', function(crudService) {
     
     addStudent: function(payload) {
       crudService.addOne('students', payload)
-      .then( function (result) {  
-                                 return result })
+      .then( function (result) { return result })
       .catch( function (error) { return error; });
     },
     
