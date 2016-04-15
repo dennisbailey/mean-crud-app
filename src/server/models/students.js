@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+var faker = require('faker');
+mongoose.Promise = require('bluebird');
 var Schema = mongoose.Schema;
 
 var StudentSchema = new Schema({
@@ -17,5 +19,15 @@ var StudentSchema = new Schema({
 });
 
 var Student = mongoose.model('student', StudentSchema);
+
+var student = new Student({
+  firstName: fake.name.firstName(),
+  firstName: fake.name.lastName(),
+  year: faker.random.number(6)
+});
+
+student.save()
+.then( function (result) { console.log('success:', student); })
+.catch( function (error) { console.log('error', error);; })
 
 module.exports = Student;

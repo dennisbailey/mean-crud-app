@@ -5,12 +5,11 @@ var Students = require('../models/students');
 // Get all students
 router.get('/', function(req, res, next) {
 
-  Students.find(function(err, students){
-    if (err) { return next(err); }
-
-    res.status(200).json({ status : 'success',
-                           data   : students });
-  });
+  Students.find({}, function(err, students)
+  
+  .then( function (result) { res.status(200).json({ status : 'success',
+                                                    data   : students }); })
+  .catch( function (error) { return error; })
 
 });
 
