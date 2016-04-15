@@ -1,5 +1,4 @@
 app.controller('myController', ['$scope', 'studentDataService', function($scope, studentDataService) {
-  $scope.greeting = 'Annnnnngggggguuuullllaaaaarrr!';
   
   $scope.student = {};
   
