@@ -5,40 +5,43 @@ var Students = require('../models/students');
 // Get all students
 router.get('/', function(req, res, next) {
 
-  Students.find({}, function(err, students)
-  
+  Students.find({})
+
   .then( function (result) { res.status(200).json({ status : 'success',
-                                                    data   : students }); })
-  .catch( function (error) { return error; })
+                                                    data   : result }); })
+  .catch( function (error) { return next(error); });
 
 });
 
 router.post('/', function(req, res, next){
- var student = Students(req.body);
- student.save(function(error, student){
-   res.status(200).json({
-     status: 'success',
-     data: student
-   });
- });
+  var student = Students(req.body);
+
+  student.save()
+
+  .then( function (result) { res.status(200).json({ status : 'success',
+                                                    data   : result }); })
+
+  .catch( function (error) { return next(error); });
+
 });
 
 router.put('/update/:id', function(req, res, next) {
-  Students.findByIdAndUpdate( req.params.id, req.body, { new: true }, function(err, update) {
-    if (err) { return next(err); }
-    res.status(200).json({ status : 'success',
-                           data : update });
-  });
+  Students.findByIdAndUpdate( req.params.id, req.body, { new: true })
+
+  .then( function (result) { res.status(200).json({ status : 'success',
+                                                    data   : result }); })
+
+  .catch( function (error) { return next(error); });
 
 });
 
 router.delete('/delete/:id', function(req, res, next) {
-  Students.findByIdAndRemove(req.params.id, function(err, student) {
-    if (err) { return next(err); }
-    res.status(200).json({ status : 'goodbye, sucker!',
-                           data : student });
-  });
+  Students.findByIdAndRemove(req.params.id)
 
+  .then( function (result) { res.status(200).json({ status : 'success',
+                                                    data   : result }); })
+
+  .catch( function (error) { return next(error); });
 });
 
 module.exports = router;
